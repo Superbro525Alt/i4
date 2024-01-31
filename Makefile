@@ -25,10 +25,6 @@ TARGET = $(BIN_DIR)/i4.exe
 # Main source file
 MAIN_FILE = main.cpp
 
-ifeq ($(ACTIONS),)
-	ACTIONS = false
-endif
-
 # Default target
 all: clean $(TARGET)
 
@@ -44,6 +40,5 @@ $(TARGET): $(OBJ_FILES)
 
 # Clean up
 clean:
-ifeq ($(ACTIONS),false)
 	del /Q "$(OBJ_DIR)" "$(BIN_DIR)"
-endif
+	
