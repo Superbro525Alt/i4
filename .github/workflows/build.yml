@@ -3,57 +3,31 @@ name: Build and Test
 on: [push]
 
 jobs:
-  build-ubuntu:
+  build:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up GCC
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y g++
-
-    - name: Build and test
-      run: |
-        make
-        make test  # Add a test target in your Makefile if you want to run tests
-
-  build-windows:
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Build and test
-      run: |
-        make
-        make test  # Add a test target in your Makefile if you want to run tests
-
-  build-macos:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        platform: [windows, linux, macos]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Set up GCC
+      if: matrix.platform == 'linux' || matrix.platform == 'macos'
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
 
     - name: Install dependencies
+      if: matrix.platform == 'linux' || matrix.platform == 'macos'
       run: |
-        # Add any macOS-specific dependencies installation if needed
+        if [ "${{ matrix.platform }}" == "linux" ]; then
+          sudo apt-get update
+          sudo apt-get install -y g++
+        fi
 
     - name: Build and test
       run: |
-        make
-        make test  # Add a test target in your Makefile if you want to run tests
+        make PLATFORM=${{ matrix.platform }}
