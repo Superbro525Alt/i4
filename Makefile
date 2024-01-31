@@ -20,18 +20,7 @@ SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 # Executable name with .exe extension for Windows
-ifeq ($(PLATFORM),)
-    PLATFORM = windows
-endif
-
-ifeq ($(PLATFORM),windows)
-    EXE_SUFFIX = .exe
-    DEL_CMD = rmdir /s /q obj bin
-else
-    EXE_SUFFIX =
-    DEL_CMD = rm -rf obj bin
-endif
-TARGET = $(BIN_DIR)/i4$(EXE_SUFFIX)
+TARGET = $(BIN_DIR)/i4.exe
 
 # Main source file
 MAIN_FILE = main.cpp
@@ -51,4 +40,4 @@ $(TARGET): $(OBJ_FILES)
 
 # Clean up
 clean:
-	$(DEL_CMD)
+	del /Q "$(OBJ_DIR)" "$(BIN_DIR)"

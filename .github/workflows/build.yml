@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        platform: [windows, linux, macos]
+        platform: [windows]
 
     steps:
     - name: Checkout code
