@@ -38,6 +38,9 @@ $(TARGET): $(OBJ_FILES)
 	@if not exist "$(BIN_DIR)" mkdir "$(BIN_DIR)"
 	$(CC) $(CFLAGS) $^ -o $@
 
+test:
+	echo "=== NOT IMPLEMENTED ==="
+
 # Clean up
 clean:
 	del /Q "$(OBJ_DIR)" "$(BIN_DIR)"
