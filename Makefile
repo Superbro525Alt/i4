@@ -26,10 +26,10 @@ endif
 
 ifeq ($(PLATFORM),windows)
     EXE_SUFFIX = .exe
-    DEL_CMD = del /Q
+    DEL_CMD = rmdir /s /q obj bin
 else
     EXE_SUFFIX =
-    DEL_CMD = rm -rf
+    DEL_CMD = rm -rf obj bin
 endif
 TARGET = $(BIN_DIR)/i4$(EXE_SUFFIX)
 
@@ -51,4 +51,4 @@ $(TARGET): $(OBJ_FILES)
 
 # Clean up
 clean:
-	$(DEL_CMD) "$(OBJ_DIR)" "$(BIN_DIR)"
+	$(DEL_CMD)
