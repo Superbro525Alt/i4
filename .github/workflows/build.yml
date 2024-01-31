@@ -30,4 +30,4 @@ jobs:
 
     - name: Build and test
       run: |
-        make PLATFORM=${{ matrix.platform }}
+        make PLATFORM=${{ matrix.platform }} ACTIONS=true
