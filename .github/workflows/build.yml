@@ -1,33 +1,23 @@
-name: Build and Test
+name: Build on Windows
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: windows-latest
 
-    strategy:
-      matrix:
-        platform: [windows]
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up GCC
-      if: matrix.platform == 'linux' || matrix.platform == 'macos'
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      if: matrix.platform == 'linux' || matrix.platform == 'macos'
+    - name: Set up MSYS2 environment
       run: |
-        if [ "${{ matrix.platform }}" == "linux" ]; then
-          sudo apt-get update
-          sudo apt-get install -y g++
-        fi
+        choco install msys2
+        refreshenv
+        pacman -Sy --noconfirm make gcc
 
-    - name: Build and test
-      run: |
-        make PLATFORM=${{ matrix.platform }} ACTIONS=true
+    - name: Build
+      run: make PLATFORM=windows
