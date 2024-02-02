@@ -25,8 +25,12 @@ TARGET = $(BIN_DIR)/i4.exe
 # Main source file
 MAIN_FILE = main.cpp
 
+ifeq ($(ACTIONS),)
+	ACTIONS = false
+endif
+
 # Default target
-all: clean $(TARGET)
+all: $(TARGET)
 
 # Compile each source file to object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
@@ -38,6 +42,11 @@ $(TARGET): $(OBJ_FILES)
 	@if not exist "$(BIN_DIR)" mkdir "$(BIN_DIR)"
 	$(CC) $(CFLAGS) $^ -o $@
 
+run: $(TARGET)
+	$(TARGET)
+	
 # Clean up
 clean:
+ifeq ($(ACTIONS),false)
 	del /Q "$(OBJ_DIR)" "$(BIN_DIR)"
+endif

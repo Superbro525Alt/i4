@@ -1,7 +1,11 @@
+#pragma once
+
 #include "config.h"
+#include "window.h"
 
 #include <Windows.h>
 #include <vector>
+#include <iostream>
 
 namespace core {
 namespace window {
@@ -11,11 +15,16 @@ class WindowManager {
     explicit WindowManager();
     ~WindowManager();
     
-    void add_window(HWND window);
-    void remove_window(HWND window);
+    void AddWindow(core::window::Window *window);
+    void RemoveWindow(core::window::Window *window);
+
+    std::vector<core::window::Window*> GetWindows();
+
+    static std::vector<core::window::Window*> GetActiveWindows();
+    static std::vector<core::window::Window*> GetRealWindows();
 
     private:
-    std::vector<HWND> windows;
+    std::vector<core::window::Window*> windows;
     core::config::ConfigManager *config_manager;
 };
 }
